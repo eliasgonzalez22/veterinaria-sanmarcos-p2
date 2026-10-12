@@ -1,7 +1,7 @@
-export default function Selector({ id, opciones, ...props }) {
+export default function Selector(props) {
   return (
-    <select id={id} className="form-select" {...props}>
-      {opciones.map((o) => (
+    <select className="form-select" id={props.id} value={props.value} onChange={props.onChange}>
+      {props.opciones.map((o) => (
         <option key={o} value={o}>{o}</option>
       ))}
     </select>
