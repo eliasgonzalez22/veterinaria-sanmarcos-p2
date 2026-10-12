@@ -1,30 +1,29 @@
-import { useState } from 'react'
-import { servicios } from '../data/servicios'
-import BuscadorServicios from '../components/molecules/BuscadorServicios'
+import { useNavigate, useParams } from 'react-router-dom'
+import PlantillaPublica from '../components/templates/PlantillaPublica'
 import ListaServicios from '../components/organisms/ListaServicios'
+import { servicios } from '../data/servicios'
 
 export default function Servicios() {
-  const [busqueda, setBusqueda] = useState('')
-  const [categoria, setCategoria] = useState('Todas')
+  const navigate = useNavigate()
+  const params = useParams()
 
-  const categorias = ['Todas', ...new Set(servicios.map((s) => s.categoria))]
-  const filtrados = servicios.filter(
-    (s) =>
-      (categoria === 'Todas' || s.categoria === categoria) &&
-      s.nombre.toLowerCase().includes(busqueda.toLowerCase())
-  )
+  let visibles = servicios
+  let titulo = 'Servicios'
+
+  if (params.nombre) {
+    visibles = servicios.filter((s) => s.categoria === params.nombre)
+    titulo = params.nombre
+  }
+  if (params.texto) {
+    const buscado = params.texto.toLowerCase()
+    visibles = servicios.filter((s) => s.nombre.toLowerCase().includes(buscado))
+    titulo = `Resultados para "${params.texto}"`
+  }
 
   return (
-    <>
-      <h1 className="h3 mb-3">Servicios</h1>
-      <BuscadorServicios
-        busqueda={busqueda}
-        onBusqueda={setBusqueda}
-        categoria={categoria}
-        onCategoria={setCategoria}
-        categorias={categorias}
-      />
-      <ListaServicios servicios={filtrados} />
-    </>
+    <PlantillaPublica>
+      <h1 className="h3 mb-3">{titulo}</h1>
+      <ListaServicios servicios={visibles} onVerDetalle={(id) => navigate(`/servicio/${id}`)} />
+    </PlantillaPublica>
   )
 }
