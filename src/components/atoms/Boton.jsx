@@ -1,7 +1,11 @@
-export default function Boton({ children, variante = 'success', tipo = 'button', ...props }) {
+export default function Boton(props) {
   return (
-    <button type={tipo} className={`btn btn-${variante}`} {...props}>
-      {children}
+    <button
+      type={props.tipo || 'button'}
+      className={`btn btn-${props.variante || 'success'}`}
+      onClick={props.onClick}
+    >
+      {props.children}
     </button>
   )
 }
