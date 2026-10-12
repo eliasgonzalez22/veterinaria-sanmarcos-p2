@@ -1,15 +1,20 @@
-import { Routes, Route } from 'react-router-dom'
-import PlantillaPublica from './components/templates/PlantillaPublica'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Inicio from './pages/Inicio'
 import Servicios from './pages/Servicios'
+import DetalleServicio from './pages/DetalleServicio'
+import NoEncontrada from './pages/NoEncontrada'
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<PlantillaPublica />}>
+    <BrowserRouter>
+      <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/servicios" element={<Servicios />} />
-      </Route>
-    </Routes>
+        <Route path="/categoria/:nombre" element={<Servicios />} />
+        <Route path="/buscar/:texto" element={<Servicios />} />
+        <Route path="/servicio/:id" element={<DetalleServicio />} />
+        <Route path="*" element={<NoEncontrada />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
