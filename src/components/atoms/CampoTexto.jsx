@@ -1,3 +1,3 @@
-export default function CampoTexto({ id, ...props }) {
-  return <input id={id} className="form-control" {...props} />
+export default function CampoTexto(props) {
+  return <input className="form-control" {...props} />
 }
