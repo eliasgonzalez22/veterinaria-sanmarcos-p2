@@ -1,25 +1,27 @@
+import { useState } from 'react'
 import CampoTexto from '../atoms/CampoTexto'
-import Selector from '../atoms/Selector'
+import Boton from '../atoms/Boton'
 
-export default function BuscadorServicios({ busqueda, onBusqueda, categoria, onCategoria, categorias }) {
+export default function BuscadorServicios(props) {
+  const [texto, setTexto] = useState('')
+
+  function enviar(evento) {
+    evento.preventDefault()
+    if (texto.trim() === '') return
+    props.onBuscar(texto.trim())
+    setTexto('')
+  }
+
   return (
-    <div className="row g-2 mb-4">
-      <div className="col-12 col-md-6">
-        <CampoTexto
-          id="busqueda"
-          placeholder="Buscar servicio..."
-          value={busqueda}
-          onChange={(e) => onBusqueda(e.target.value)}
-        />
-      </div>
-      <div className="col-12 col-md-4">
-        <Selector
-          id="categoria"
-          opciones={categorias}
-          value={categoria}
-          onChange={(e) => onCategoria(e.target.value)}
-        />
-      </div>
-    </div>
+    <form className="d-flex gap-2" role="search" onSubmit={enviar}>
+      <CampoTexto
+        type="search"
+        placeholder="Buscar servicio"
+        aria-label="Buscar servicio"
+        value={texto}
+        onChange={(e) => setTexto(e.target.value)}
+      />
+      <Boton tipo="submit" variante="outline-light">Buscar</Boton>
+    </form>
   )
 }
