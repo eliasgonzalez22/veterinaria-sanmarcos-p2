@@ -2,10 +2,12 @@ import { useNavigate } from 'react-router-dom'
 import PlantillaPublica from '../components/templates/PlantillaPublica'
 import Boton from '../components/atoms/Boton'
 import { servicios } from '../data/servicios'
+import { useTituloPagina } from '../hooks/useTituloPagina'
 
 export default function Inicio() {
   const navigate = useNavigate()
   const categorias = [...new Set(servicios.map((s) => s.categoria))]
+  useTituloPagina('Inicio')
 
   return (
     <PlantillaPublica>
