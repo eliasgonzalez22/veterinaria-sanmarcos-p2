@@ -4,6 +4,7 @@ import Boton from '../components/atoms/Boton'
 import EtiquetaEspecie from '../components/atoms/EtiquetaEspecie'
 import { servicios } from '../data/servicios'
 import { formatearPrecio } from '../utils/precios'
+import { useTituloPagina } from '../hooks/useTituloPagina'
 
 export default function DetalleServicio() {
   const navigate = useNavigate()
@@ -12,6 +13,7 @@ export default function DetalleServicio() {
   const id = Number(params.id)
   const servicio = servicios.find((s) => s.id === id)
 
+  useTituloPagina(servicio ? servicio.nombre : 'Servicio no encontrado')
   if (!servicio) {
     return (
       <PlantillaPublica>

@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import PlantillaPublica from '../components/templates/PlantillaPublica'
 import Boton from '../components/atoms/Boton'
+import { useTituloPagina } from '../hooks/useTituloPagina'
 
 export default function NoEncontrada() {
   const navigate = useNavigate()
+  useTituloPagina('Página no encontrada')
 
   return (
     <PlantillaPublica>
