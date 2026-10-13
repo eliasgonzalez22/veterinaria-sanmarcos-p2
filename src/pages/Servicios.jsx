@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import PlantillaPublica from '../components/templates/PlantillaPublica'
 import ListaServicios from '../components/organisms/ListaServicios'
 import { servicios } from '../data/servicios'
+import { useTituloPagina } from '../hooks/useTituloPagina'
 
 export default function Servicios() {
   const navigate = useNavigate()
@@ -19,6 +20,8 @@ export default function Servicios() {
     visibles = servicios.filter((s) => s.nombre.toLowerCase().includes(buscado))
     titulo = `Resultados para "${params.texto}"`
   }
+
+  useTituloPagina(titulo)
 
   return (
     <PlantillaPublica>
