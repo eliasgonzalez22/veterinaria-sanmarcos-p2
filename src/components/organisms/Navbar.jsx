@@ -1,3 +1,4 @@
+import { Container, Navbar as BarraNav, Nav, NavDropdown } from 'react-bootstrap'
 import BuscadorServicios from '../molecules/BuscadorServicios'
 
 export default function Navbar(props) {
@@ -8,54 +9,33 @@ export default function Navbar(props) {
 
   return (
     <header>
-      <nav className="navbar navbar-expand-md navbar-dark bg-success" aria-label="Principal">
-        <div className="container">
-          <a className="navbar-brand" href="/" onClick={(e) => ir(e, '/')}>
+      <BarraNav expand="md" bg="success" variant="dark" aria-label="Principal">
+        <Container>
+          <BarraNav.Brand href="/" onClick={(e) => ir(e, '/')}>
             🐾 Veterinaria San Marcos
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#menuPrincipal"
-            aria-controls="menuPrincipal"
-            aria-expanded="false"
-            aria-label="Abrir menú"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="menuPrincipal">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item">
-                <a className="nav-link" href="/" onClick={(e) => ir(e, '/')}>Inicio</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/servicios" onClick={(e) => ir(e, '/servicios')}>Servicios</a>
-              </li>
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button"
-                  data-bs-toggle="dropdown" aria-expanded="false">
-                  Categorías
-                </a>
-                <ul className="dropdown-menu">
-                  {props.categorias.map((c) => (
-                    <li key={c}>
-                      <a
-                        className="dropdown-item"
-                        href={`/categoria/${c}`}
-                        onClick={(e) => ir(e, `/categoria/${encodeURIComponent(c)}`)}
-                      >
-                        {c}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            </ul>
+          </BarraNav.Brand>
+          <BarraNav.Toggle aria-controls="menuPrincipal" aria-label="Abrir menú" />
+          <BarraNav.Collapse id="menuPrincipal">
+            <Nav className="me-auto">
+              <Nav.Link href="/" onClick={(e) => ir(e, '/')}>Inicio</Nav.Link>
+              <Nav.Link href="/servicios" onClick={(e) => ir(e, '/servicios')}>Servicios</Nav.Link>
+              <NavDropdown title="Categorías" id="menu-categorias">
+                {props.categorias.map((c) => (
+                  <NavDropdown.Item
+                    key={c}
+                    href={`/categoria/${c}`}
+                    onClick={(e) => ir(e, `/categoria/${encodeURIComponent(c)}`)}
+                  >
+                    {c}
+                  </NavDropdown.Item>
+                ))}
+              </NavDropdown>
+              <Nav.Link href="/login" onClick={(e) => ir(e, '/login')}>Ingresar</Nav.Link>
+            </Nav>
             <BuscadorServicios onBuscar={props.onBuscar} />
-          </div>
-        </div>
-      </nav>
+          </BarraNav.Collapse>
+        </Container>
+      </BarraNav>
     </header>
   )
 }
