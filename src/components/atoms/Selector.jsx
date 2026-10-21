@@ -1,9 +1,11 @@
+import { Form } from 'react-bootstrap'
+
 export default function Selector(props) {
   return (
-    <select className="form-select" id={props.id} value={props.value} onChange={props.onChange}>
+    <Form.Select id={props.id} value={props.value} onChange={props.onChange}>
       {props.opciones.map((o) => (
         <option key={o} value={o}>{o}</option>
       ))}
-    </select>
+    </Form.Select>
   )
 }

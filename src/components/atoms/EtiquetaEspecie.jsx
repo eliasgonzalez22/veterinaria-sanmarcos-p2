@@ -1,3 +1,5 @@
+import { Badge } from 'react-bootstrap'
+
 export default function EtiquetaEspecie(props) {
-  return <span className="badge text-bg-info">{props.especie}</span>
+  return <Badge bg="info" text="dark">{props.especie}</Badge>
 }
