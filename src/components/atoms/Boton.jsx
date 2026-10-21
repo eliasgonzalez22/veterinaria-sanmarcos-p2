@@ -1,11 +1,14 @@
+import { Button } from 'react-bootstrap'
+
 export default function Boton(props) {
   return (
-    <button
+    <Button
       type={props.tipo || 'button'}
-      className={`btn btn-${props.variante || 'success'}`}
+      variant={props.variante || 'success'}
       onClick={props.onClick}
+      disabled={props.disabled}
     >
       {props.children}
-    </button>
+    </Button>
   )
 }
