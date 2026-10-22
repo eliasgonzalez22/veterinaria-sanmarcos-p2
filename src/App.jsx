@@ -13,6 +13,7 @@ export default function App() {
         <Route path="/categoria/:nombre" element={<Servicios />} />
         <Route path="/buscar/:texto" element={<Servicios />} />
         <Route path="/servicio/:id" element={<DetalleServicio />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NoEncontrada />} />
       </Routes>
     </BrowserRouter>
