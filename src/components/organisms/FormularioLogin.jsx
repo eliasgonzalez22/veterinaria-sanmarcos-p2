@@ -14,7 +14,7 @@ export default function FormularioLogin(props) {
     const nuevos = { email: validarEmail(email), clave: validarClave(clave) }
     setErrores(nuevos)
     if (!nuevos.email && !nuevos.clave) {
-      props.onEnviar({ email: email })
+      props.onEnviar({ email: email, clave: clave })
     }
   }
 
