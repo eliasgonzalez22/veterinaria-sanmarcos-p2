@@ -4,6 +4,7 @@ import Servicios from './pages/Servicios'
 import DetalleServicio from './pages/DetalleServicio'
 import NoEncontrada from './pages/NoEncontrada'
 import Login from './pages/Login'
+import Registro from './pages/Registro'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/buscar/:texto" element={<Servicios />} />
         <Route path="/servicio/:id" element={<DetalleServicio />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
         <Route path="*" element={<NoEncontrada />} />
       </Routes>
     </BrowserRouter>
