@@ -3,6 +3,7 @@ import Inicio from './pages/Inicio'
 import Servicios from './pages/Servicios'
 import DetalleServicio from './pages/DetalleServicio'
 import NoEncontrada from './pages/NoEncontrada'
+import Login from './pages/Login'
 
 export default function App() {
   return (
