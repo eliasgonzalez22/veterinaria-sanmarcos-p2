@@ -26,6 +26,12 @@ export default function Login() {
         <Col xs={12} md={8} lg={5}>
           {mensaje && <Alert variant="danger">{mensaje}</Alert>}
           <FormularioLogin onEnviar={ingresar} />
+          <p className="mt-3 text-center">
+            ¿No tienes cuenta?{' '}
+            <a href="/registro" onClick={(e) => { e.preventDefault(); navigate('/registro') }}>
+              Regístrate
+            </a>
+          </p>
         </Col>
       </Row>
     </PlantillaPublica>
