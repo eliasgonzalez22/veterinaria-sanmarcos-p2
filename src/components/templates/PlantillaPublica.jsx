@@ -2,13 +2,15 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from '../organisms/Navbar'
 import Footer from '../organisms/Footer'
 import { Container } from 'react-bootstrap'
-import { servicios } from '../../data/servicios'
+import { useServicios } from '../../context/ServiciosContext'
 
-const categorias = [...new Set(servicios.map((s) => s.categoria))]
+
 
 export default function PlantillaPublica(props) {
   const navigate = useNavigate()
-
+  const contexto = useServicios()
+  const categorias = [...new Set(contexto.servicios.map((s) => s.categoria))]
+  
   return (
     <>
       <Navbar
