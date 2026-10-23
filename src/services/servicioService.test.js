@@ -1,44 +1,42 @@
 import {
-  listarUsuarios,
-  registrarUsuario,
-  iniciarSesion,
-  obtenerSesion,
-  cerrarSesion,
-} from './usuarioService'
+  listarServicios,
+  obtenerServicio,
+  crearServicio,
+  actualizarServicio,
+  eliminarServicio,
+} from './servicioService'
 
-describe('usuarioService', () => {
+describe('servicioService', () => {
   beforeEach(() => {
     localStorage.clear()
   })
 
-  it('parte con 2 usuarios iniciales', () => {
-    expect(listarUsuarios()).toHaveLength(2)
+  it('lista los 31 servicios iniciales', () => {
+    expect(listarServicios()).toHaveLength(31)
   })
 
-  it('inicia sesión con credenciales correctas', () => {
-    const usuario = iniciarSesion('dueno@sanmarcos.cl', '123456')
-    expect(usuario.rol).toBe('dueno')
-    expect(obtenerSesion().email).toBe('dueno@sanmarcos.cl')
+  it('obtiene un servicio por id', () => {
+    expect(obtenerServicio(1).codigo).toBe('SV001')
   })
 
-  it('devuelve null con clave incorrecta', () => {
-    expect(iniciarSesion('dueno@sanmarcos.cl', '000000')).toBeNull()
+  it('devuelve null si el servicio no existe', () => {
+    expect(obtenerServicio(999)).toBeNull()
   })
 
-  it('no registra un correo repetido', () => {
-    const datos = { nombre: 'Ana', email: 'dueno@sanmarcos.cl', clave: '123456' }
-    expect(registrarUsuario(datos)).toBeNull()
+  it('crea un servicio con id siguiente', () => {
+    const nuevo = crearServicio({ nombre: 'Baño medicado', precio: 12000 })
+    expect(nuevo.id).toBe(32)
+    expect(listarServicios()).toHaveLength(32)
   })
 
-  it('registra un usuario nuevo como dueño', () => {
-    const nuevo = registrarUsuario({ nombre: 'Luis', email: 'luis@correo.cl', clave: '123456' })
-    expect(nuevo.id).toBe(3)
-    expect(nuevo.rol).toBe('dueno')
+  it('actualiza solo los campos indicados', () => {
+    const actualizado = actualizarServicio(1, { precio: 99999 })
+    expect(actualizado.precio).toBe(99999)
+    expect(actualizado.codigo).toBe('SV001')
   })
 
-  it('cierra la sesión', () => {
-    iniciarSesion('dueno@sanmarcos.cl', '123456')
-    cerrarSesion()
-    expect(obtenerSesion()).toBeNull()
+  it('elimina un servicio', () => {
+    expect(eliminarServicio(1)).toBe(true)
+    expect(obtenerServicio(1)).toBeNull()
   })
 })
