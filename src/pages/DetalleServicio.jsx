@@ -2,16 +2,16 @@ import { useNavigate, useParams } from 'react-router-dom'
 import PlantillaPublica from '../components/templates/PlantillaPublica'
 import Boton from '../components/atoms/Boton'
 import EtiquetaEspecie from '../components/atoms/EtiquetaEspecie'
-import { servicios } from '../data/servicios'
+import { useServicios } from '../context/ServiciosContext'
 import { formatearPrecio } from '../utils/precios'
 import { useTituloPagina } from '../hooks/useTituloPagina'
 
 export default function DetalleServicio() {
   const navigate = useNavigate()
   const params = useParams()
-
+  const contexto = useServicios()
   const id = Number(params.id)
-  const servicio = servicios.find((s) => s.id === id)
+  const servicio = contexto.servicios.find((s) => s.id === id)
 
   useTituloPagina(servicio ? servicio.nombre : 'Servicio no encontrado')
   if (!servicio) {

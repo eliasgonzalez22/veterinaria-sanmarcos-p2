@@ -1,12 +1,14 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import PlantillaPublica from '../components/templates/PlantillaPublica'
 import ListaServicios from '../components/organisms/ListaServicios'
-import { servicios } from '../data/servicios'
+import { useServicios } from '../context/ServiciosContext'
 import { useTituloPagina } from '../hooks/useTituloPagina'
 
 export default function Servicios() {
   const navigate = useNavigate()
   const params = useParams()
+  const contexto = useServicios()
+  const servicios = contexto.servicios
 
   let visibles = servicios
   let titulo = 'Servicios'
