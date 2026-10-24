@@ -10,6 +10,8 @@ import Confirmacion from './pages/Confirmacion'
 import Resultado from './pages/Resultado'
 import MisCitas from './pages/MisCitas'
 import Admin from './pages/Admin'
+import AdminServicios from './pages/AdminServicios'
+import AdminServicioForm from './pages/AdminServicioForm'
 
 export default function App() {
   return (
@@ -27,6 +29,9 @@ export default function App() {
         <Route path="/resultado" element={<Resultado />} />
         <Route path="/mis-citas" element={<MisCitas />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/servicios" element={<AdminServicios />} />
+        <Route path="/admin/servicios/nuevo" element={<AdminServicioForm />} />
+        <Route path="/admin/servicios/:id/editar" element={<AdminServicioForm />} />
         <Route path="*" element={<NoEncontrada />} />
       </Routes>
     </BrowserRouter>
