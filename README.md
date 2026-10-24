@@ -18,6 +18,14 @@
 
 Aplicación web en React que permite a los dueños de mascotas revisar el catálogo de servicios de la veterinaria, registrarse e ingresar, y solicitar una cita eligiendo mascota, fecha y hora. La recepción accede a un panel de administración donde confirma las citas o propone otro horario, y gestiona el catálogo de servicios (crear, editar y eliminar). Los datos se simulan en JavaScript y se guardan en `localStorage`, sin backend.
 
+## Aportes de desarrollo (`jav-rgb`)
+
+- **Inicio:** incorporación de una imagen de atención veterinaria en la portada.
+- **Contacto:** página con mapa y enlace a Google Maps para una ubicación veterinaria de referencia en Rancagua.
+- **Ofertas:** selección de servicios destacados del catálogo, enlazados a su detalle; los precios se muestran sin inventar descuentos.
+- **Blog:** dos artículos informativos con sus vistas de detalle y enlaces a fuentes veterinarias.
+- **Administración de citas:** ficha imprimible con los datos de la solicitud, su estado y el valor del servicio. Es un comprobante de solicitud, no de pago.
+
 ## Estructura de `src`
 
 Los componentes siguen **Atomic Design**:
