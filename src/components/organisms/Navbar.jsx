@@ -33,7 +33,29 @@ export default function Navbar(props) {
                   </NavDropdown.Item>
                 ))}
               </NavDropdown>
-              <Nav.Link href="/login" onClick={(e) => ir(e, '/login')}>Ingresar</Nav.Link>
+              {props.sesion ? (
+                <>
+                  {props.sesion.rol === 'recepcionista' ? (
+                    <Nav.Link href="/admin" onClick={(e) => ir(e, '/admin')}>Panel</Nav.Link>
+                  ) : (
+                    <Nav.Link href="/mis-citas" onClick={(e) => ir(e, '/mis-citas')}>Mis citas</Nav.Link>
+                  )}
+                  <Nav.Link
+                    href="/"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      props.onSalir()
+                    }}
+                  >
+                    Cerrar sesión ({props.sesion.nombre})
+                  </Nav.Link>
+                </>
+              ) : (
+                <>
+                  <Nav.Link href="/login" onClick={(e) => ir(e, '/login')}>Ingresar</Nav.Link>
+                  <Nav.Link href="/registro" onClick={(e) => ir(e, '/registro')}>Crear cuenta</Nav.Link>
+                </>
+              )}
             </Nav>
             <BuscadorServicios onBuscar={props.onBuscar} />
           </BarraNav.Collapse>
