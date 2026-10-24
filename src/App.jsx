@@ -6,6 +6,9 @@ import NoEncontrada from './pages/NoEncontrada'
 import Login from './pages/Login'
 import Registro from './pages/Registro'
 import Agendar from './pages/Agendar'
+import Confirmacion from './pages/Confirmacion'
+import Resultado from './pages/Resultado'
+import MisCitas from './pages/MisCitas'
 
 export default function App() {
   return (
@@ -19,6 +22,9 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/agendar/:id" element={<Agendar />} />
+        <Route path="/confirmacion" element={<Confirmacion />} />
+        <Route path="/resultado" element={<Resultado />} />
+        <Route path="/mis-citas" element={<MisCitas />} />
         <Route path="*" element={<NoEncontrada />} />
       </Routes>
     </BrowserRouter>
