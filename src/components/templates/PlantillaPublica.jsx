@@ -21,6 +21,8 @@ export default function PlantillaPublica(props) {
       <Navbar
         categorias={categorias}
         onNavegar={navigate}
+        sesion={sesion}
+        onSalir={salir}
         onBuscar={(texto) => navigate(`/buscar/${encodeURIComponent(texto)}`)}
       />
       <Container as="main" className="py-4">{props.children}</Container>
