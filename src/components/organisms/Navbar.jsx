@@ -20,6 +20,8 @@ export default function Navbar(props) {
               <Nav.Link href="/" onClick={(e) => ir(e, '/')}>Inicio</Nav.Link>
               <Nav.Link href="/servicios" onClick={(e) => ir(e, '/servicios')}>Servicios</Nav.Link>
               <Nav.Link href="/contacto" onClick={(e) => ir(e, '/contacto')}>Contacto</Nav.Link>
+              <Nav.Link href="/ofertas" onClick={(e) => ir(e, '/ofertas')}>Ofertas</Nav.Link>
+              <Nav.Link href="/blog" onClick={(e) => ir(e, '/blog')}>Blog</Nav.Link>
               <NavDropdown title="Categorías" id="menu-categorias">
                 {props.categorias.map((c) => (
                   <NavDropdown.Item

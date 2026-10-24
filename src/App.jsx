@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Inicio from './pages/Inicio'
 import Contacto from './pages/Contacto'
+import Ofertas from './pages/Ofertas'
+import Blog from './pages/Blog'
 import Servicios from './pages/Servicios'
 import DetalleServicio from './pages/DetalleServicio'
 import NoEncontrada from './pages/NoEncontrada'
@@ -18,6 +20,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/contacto" element={<Contacto />} />
+        <Route path="/ofertas" element={<Ofertas />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<Blog />} />
         <Route path="/servicios" element={<Servicios />} />
         <Route path="/categoria/:nombre" element={<Servicios />} />
         <Route path="/buscar/:texto" element={<Servicios />} />
