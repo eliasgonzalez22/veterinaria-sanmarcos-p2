@@ -24,3 +24,27 @@ export function validarConfirmacion(clave, confirmacion) {
   if (clave !== confirmacion) return 'Las contraseñas no coinciden'
   return ''
 }
+
+export function fechaHoy() {
+  const d = new Date()
+  const mes = String(d.getMonth() + 1).padStart(2, '0')
+  const dia = String(d.getDate()).padStart(2, '0')
+  return `${d.getFullYear()}-${mes}-${dia}`
+}
+
+export function validarMascota(nombre) {
+  if (!nombre.trim()) return 'Ingresa el nombre de tu mascota'
+  return ''
+}
+
+export function validarFecha(fecha) {
+  if (!fecha) return 'Elige una fecha'
+  if (fecha < fechaHoy()) return 'La fecha no puede ser anterior a hoy'
+  return ''
+}
+
+export function validarHora(hora) {
+  if (!hora) return 'Elige una hora'
+  if (hora < '09:00' || hora > '18:00') return 'Atendemos entre 09:00 y 18:00'
+  return ''
+}
