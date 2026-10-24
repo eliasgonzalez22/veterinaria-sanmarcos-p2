@@ -1,16 +1,84 @@
-# React + Vite
+# Veterinaria San Marcos · Parcial 2
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+**Equipo:** [Equipo 1]
+**Curso:** DSY1104 · Desarrollo Fullstack II · Duoc UC · 2026
 
-Currently, two official plugins are available:
+## Integrantes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Nombre | Correo institucional | GitHub |
+|---|---|---|
+| Elias Gonzalez Abraham Hernandez | eliaa.gonzalez@duocuc.cl | eliasgonzalez22 |
+| [NOMBRE DE TU COMPAÑERO] | [CORREO@duocuc.cl] | jav-rgb |
 
-## React Compiler
+## Caso
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Veterinaria San Marcos (Forma A)**, una clínica veterinaria en Rancagua que ofrece consultas, vacunación, cirugías menores, desparasitación y exámenes para perros, gatos y otras especies.
 
-## Expanding the Oxlint configuration
+## Descripción
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Aplicación web en React que permite a los dueños de mascotas revisar el catálogo de servicios de la veterinaria, registrarse e ingresar, y solicitar una cita eligiendo mascota, fecha y hora. La recepción accede a un panel de administración donde confirma las citas o propone otro horario, y gestiona el catálogo de servicios (crear, editar y eliminar). Los datos se simulan en JavaScript y se guardan en `localStorage`, sin backend.
+
+## Estructura de `src`
+
+Los componentes siguen **Atomic Design**:
+
+```
+src/
+├── components/
+│   ├── atoms/          Boton, CampoTexto, Selector, EtiquetaEspecie,
+│   │                   EtiquetaEstadoCita, Icono
+│   ├── molecules/      BuscadorServicios, CampoFormulario, FilaCita,
+│   │                   SelectorFechaHora, TarjetaServicio
+│   ├── organisms/      Navbar, Footer, ListaServicios, FormularioLogin,
+│   │                   FormularioRegistro, FormularioSolicitudCita,
+│   │                   FormularioServicio
+│   └── templates/      PlantillaPublica, PlantillaAdmin
+├── pages/              Inicio, Servicios, DetalleServicio, Ofertas, Blog,
+│                       Contacto, Login, Registro, Agendar, Confirmacion,
+│                       Resultado, MisCitas, Admin, AdminServicios,
+│                       AdminServicioForm, NoEncontrada
+├── context/            ServiciosContext (estado compartido del catálogo)
+├── services/           servicioService, usuarioService, citaService
+│                       (CRUD con localStorage)
+├── hooks/              useTituloPagina
+├── utils/              precios, validaciones
+└── data/               servicios (catálogo inicial de 31 servicios)
+```
+
+Las pruebas (`*.test.js` / `*.test.jsx`) están junto al archivo que prueban.
+
+## Tecnologías
+
+- React 19 y Vite 8
+- React Router 7 (navegación)
+- Bootstrap 5.3 y React Bootstrap 2 (diseño responsivo)
+- Vitest, Testing Library y jsdom (pruebas unitarias y cobertura)
+
+## Cómo ejecutar
+
+```bash
+npm install
+npm run dev
+```
+
+Otros comandos:
+
+```bash
+npm run test:run   # ejecuta las pruebas una vez
+npm run test:cov   # pruebas con reporte de cobertura
+npm run build      # genera la versión de producción
+```
+
+## Usuarios de prueba
+
+| Rol | Correo | Contraseña |
+|---|---|---|
+| Dueño | dueno@sanmarcos.cl | 123456 |
+| Recepcionista (admin) | recepcion@sanmarcos.cl | 123456 |
+
+También se pueden crear dueños nuevos desde `/registro`.
+
+## Material complementario
+
+Carpeta de Google Drive con el ERS V2, el documento de cobertura y las capturas responsivas:
+[PEGA AQUÍ EL ENLACE DE LA CARPETA]
