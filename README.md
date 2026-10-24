@@ -81,4 +81,4 @@ También se pueden crear dueños nuevos desde `/registro`.
 ## Material complementario
 
 Carpeta de Google Drive con el ERS V2, el documento de cobertura y las capturas responsivas:
-[PEGA AQUÍ EL ENLACE DE LA CARPETA]
+[https://drive.google.com/drive/folders/1DLfZtx6ix_a1IyR5G7Z-I99Fv8B1fT5A?usp=sharing]
