@@ -37,6 +37,28 @@ export default function Inicio() {
           ))}
         </ul>
       </section>
+      <section className="container my-5" aria-labelledby="titulo-ubicacion">
+        <div className="row g-4 align-items-center">
+          <div className="col-12 col-lg-4">
+            <h2 id="titulo-ubicacion" className="h3">Encuéntranos en Rancagua</h2>
+            <p className="mb-2"><strong>Ubicación de referencia:</strong> Hospital Clínico Veterinario Koning</p>
+            <p className="text-muted">Av. Diagonal Doñihue 1302, Rancagua</p>
+            <a className="btn btn-outline-success" href="https://www.google.com/maps/search/?api=1&query=Hospital+Cl%C3%ADnico+Veterinario+Koning%2C+Av.+Diagonal+Do%C3%B1ihue+1302%2C+Rancagua" target="_blank" rel="noreferrer">Abrir en Google Maps</a>
+          </div>
+          <div className="col-12 col-lg-8">
+            <iframe
+              title="Mapa de ubicación de referencia en Rancagua"
+              src="https://www.google.com/maps?q=Hospital+Cl%C3%ADnico+Veterinario+Koning%2C+Av.+Diagonal+Do%C3%B1ihue+1302%2C+Rancagua&output=embed"
+              width="100%"
+              height="360"
+              style={{ border: 0, borderRadius: '0.75rem' }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
     </PlantillaPublica>
   )
 }
