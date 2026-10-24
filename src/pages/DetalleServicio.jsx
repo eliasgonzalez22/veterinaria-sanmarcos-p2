@@ -34,7 +34,10 @@ export default function DetalleServicio() {
           <p className="mb-1">Duración: {servicio.duracion}</p>
           {servicio.obs && <p className="mb-1">Observaciones: {servicio.obs}</p>}
           <p className="fs-4 fw-bold mt-3">{formatearPrecio(servicio.precio)}</p>
-          <Boton variante="outline-success" onClick={() => navigate(-1)}>Volver</Boton>
+          <div className="d-flex gap-2">
+            <Boton onClick={() => navigate(`/agendar/${servicio.id}`)}>Agendar cita</Boton>
+            <Boton variante="outline-success" onClick={() => navigate(-1)}>Volver</Boton>
+          </div>
         </div>
       </article>
     </PlantillaPublica>
