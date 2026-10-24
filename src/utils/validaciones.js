@@ -48,3 +48,14 @@ export function validarHora(hora) {
   if (hora < '09:00' || hora > '18:00') return 'Atendemos entre 09:00 y 18:00'
   return ''
 }
+
+export function validarObligatorio(valor, nombreCampo) {
+  if (!String(valor).trim()) return `${nombreCampo} es obligatorio`
+  return ''
+}
+
+export function validarPrecio(precio) {
+  if (precio === '') return 'El precio es obligatorio'
+  if (isNaN(Number(precio)) || Number(precio) <= 0) return 'El precio debe ser un número mayor a 0'
+  return ''
+}
