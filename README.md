@@ -8,7 +8,8 @@
 | Nombre | Correo institucional | GitHub |
 |---|---|---|
 | Elias Gonzalez Abraham Hernandez | eliaa.gonzalez@duocuc.cl | eliasgonzalez22 |
-| [NOMBRE DE TU COMPAÑERO] | [CORREO@duocuc.cl] | jav-rgb |
+| Javier Ignacio Alegría Vargas | jav.alegria@duocuc.cl | jav-rgb |
+| Sebastian Manuel Leon Rodriguez | sebas.leonr@duocuc.cl | |
 
 ## Caso
 
@@ -25,6 +26,18 @@ Aplicación web en React que permite a los dueños de mascotas revisar el catál
 - **Ofertas:** selección de servicios destacados del catálogo, enlazados a su detalle; los precios se muestran sin inventar descuentos.
 - **Blog:** dos artículos informativos con sus vistas de detalle y enlaces a fuentes veterinarias.
 - **Administración de citas:** ficha imprimible con los datos de la solicitud, su estado y el valor del servicio. Es un comprobante de solicitud, no de pago.
+
+## Aportes de desarrollo (`eliasgonzalez22`)
+
+- **Base del proyecto:** configuración con React, Vite, React Router y React Bootstrap, y la estructura de carpetas con Atomic Design (átomos, moléculas, organismos, plantillas y páginas).
+- **Catálogo:** listado de los 31 servicios con filtro por categoría, buscador, detalle de cada servicio y cálculo de precios (incluye el recargo de urgencia fuera de horario).
+- **Acceso de usuarios:** formularios de ingreso y registro con validaciones, usuarios con roles (dueño y recepcionista), sesión guardada en `localStorage`, y menú que cambia según la sesión.
+- **Perfil:** página para ver los datos y editar el nombre del usuario.
+- **Flujo de citas:** solicitud con mascota, fecha y hora, confirmación de datos, pantalla de resultado y "Mis citas" con el estado de cada una.
+- **Panel de recepción:** confirmar citas o proponer otro horario, CRUD de servicios (crear, editar y eliminar), resumen con ítems críticos, y listado de usuarios con su historial.
+- **Estado y datos:** servicios con `localStorage` (`servicioService`, `usuarioService`, `citaService`) y `ServiciosContext` para compartir el catálogo en toda la app.
+- **Páginas informativas:** Nosotros y Categorías.
+- **Pruebas unitarias con Vitest:** pruebas de funciones, de los tres servicios y de componentes (botón, etiqueta y formulario de login), con reporte de cobertura.
 
 ## Estructura de `src`
 
@@ -89,4 +102,4 @@ También se pueden crear dueños nuevos desde `/registro`.
 ## Material complementario
 
 Carpeta de Google Drive con el ERS V2, el documento de cobertura y las capturas responsivas:
-[https://drive.google.com/drive/folders/1DLfZtx6ix_a1IyR5G7Z-I99Fv8B1fT5A?usp=sharing]
+https://drive.google.com/drive/folders/1DLfZtx6ix_a1IyR5G7Z-I99Fv8B1fT5A?usp=drive_link
