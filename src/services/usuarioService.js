@@ -37,3 +37,15 @@ export function obtenerSesion() {
 export function cerrarSesion() {
   localStorage.removeItem(CLAVE_SESION)
 }
+
+export function actualizarUsuario(id, cambios) {
+  const usuarios = listarUsuarios()
+  const nuevos = usuarios.map((u) => (u.id === id ? { ...u, ...cambios } : u))
+  localStorage.setItem(CLAVE, JSON.stringify(nuevos))
+  const actualizado = nuevos.find((u) => u.id === id) ?? null
+  const sesion = obtenerSesion()
+  if (actualizado && sesion && sesion.id === id) {
+    localStorage.setItem(CLAVE_SESION, JSON.stringify(actualizado))
+  }
+  return actualizado
+}
