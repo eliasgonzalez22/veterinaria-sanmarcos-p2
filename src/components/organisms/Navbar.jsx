@@ -41,6 +41,7 @@ export default function Navbar(props) {
                   ) : (
                     <Nav.Link href="/mis-citas" onClick={(e) => ir(e, '/mis-citas')}>Mis citas</Nav.Link>
                   )}
+                  <Nav.Link href="/perfil" onClick={(e) => ir(e, '/perfil')}>Perfil</Nav.Link>
                   <Nav.Link
                     href="/"
                     onClick={(e) => {

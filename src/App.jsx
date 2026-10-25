@@ -19,6 +19,7 @@ import Nosotros from './pages/Nosotros'
 import Categorias from './pages/Categorias'
 import AdminResumen from './pages/AdminResumen'
 import AdminUsuarios from './pages/AdminUsuarios'
+import Perfil from './pages/Perfil'
 
 export default function App() {
   return (
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/admin/resumen" element={<AdminResumen />} />
         <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+        <Route path="/perfil" element={<Perfil />} />
         <Route path="*" element={<NoEncontrada />} />
       </Routes>
     </BrowserRouter>
