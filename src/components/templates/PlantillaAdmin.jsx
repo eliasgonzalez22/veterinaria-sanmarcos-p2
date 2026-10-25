@@ -34,6 +34,12 @@ export default function PlantillaAdmin(props) {
               <Nav.Link href="/admin/servicios" onClick={(e) => { e.preventDefault(); navigate('/admin/servicios') }}>
                 Servicios
               </Nav.Link>
+              <Nav.Link href="/admin/resumen" onClick={(e) => { e.preventDefault(); navigate('/admin/resumen') }}>
+                Resumen
+              </Nav.Link>
+              <Nav.Link href="/admin/usuarios" onClick={(e) => { e.preventDefault(); navigate('/admin/usuarios') }}>
+                Usuarios
+              </Nav.Link>
             </Nav>
           </nav>
           <Boton variante="outline-light" onClick={salir}>Cerrar sesión</Boton>

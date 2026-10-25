@@ -17,6 +17,8 @@ import AdminServicios from './pages/AdminServicios'
 import AdminServicioForm from './pages/AdminServicioForm'
 import Nosotros from './pages/Nosotros'
 import Categorias from './pages/Categorias'
+import AdminResumen from './pages/AdminResumen'
+import AdminUsuarios from './pages/AdminUsuarios'
 
 export default function App() {
   return (
@@ -43,6 +45,8 @@ export default function App() {
         <Route path="/admin/servicios/:id/editar" element={<AdminServicioForm />} />
         <Route path="/nosotros" element={<Nosotros />} />
         <Route path="/categorias" element={<Categorias />} />
+        <Route path="/admin/resumen" element={<AdminResumen />} />
+        <Route path="/admin/usuarios" element={<AdminUsuarios />} />
         <Route path="*" element={<NoEncontrada />} />
       </Routes>
     </BrowserRouter>
