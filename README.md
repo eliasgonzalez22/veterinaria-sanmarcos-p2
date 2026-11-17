@@ -1,4 +1,6 @@
-# Veterinaria San Marcos · Parcial 2
+# Veterinaria San Marcos · Frontend (Parciales 2 y 3)
+
+**Backend (Parcial 3):** https://github.com/eliasgonzalez22/veterinaria-sanmarcos-p3-backend
 
 **Equipo:** [Equipo 1]
 **Curso:** DSY1104 · Desarrollo Fullstack II · Duoc UC · 2026
@@ -74,13 +76,18 @@ Las pruebas (`*.test.js` / `*.test.jsx`) están junto al archivo que prueban.
 - React Router 7 (navegación)
 - Bootstrap 5.3 y React Bootstrap 2 (diseño responsivo)
 - Vitest, Testing Library y jsdom (pruebas unitarias y cobertura)
+- Axios (consumo de la API REST del backend)
 
 ## Cómo ejecutar
 
 ```bash
 npm install
+cp .env.example .env   # dirección del backend (VITE_API_URL)
 npm run dev
 ```
+
+El login, el registro, el perfil y la lista de usuarios necesitan el backend encendido
+(ver su README). Si abres el frontend con el reenvío de puertos de VS Code, reenvía también el puerto 8081.
 
 Otros comandos:
 
@@ -90,14 +97,46 @@ npm run test:cov   # pruebas con reporte de cobertura
 npm run build      # genera la versión de producción
 ```
 
-## Usuarios de prueba
+## Usuarios de prueba (del backend)
 
 | Rol | Correo | Contraseña |
 |---|---|---|
-| Dueño | dueno@sanmarcos.cl | 123456 |
-| Recepcionista (admin) | recepcion@sanmarcos.cl | 123456 |
+| Administrador | admin@sanmarcos.cl | 123456 |
+| Recepcionista | recepcion@sanmarcos.cl | 123456 |
+| Dueño de mascota | dueno@sanmarcos.cl | 123456 |
 
-También se pueden crear dueños nuevos desde `/registro`.
+También se pueden crear dueños nuevos desde `/registro`. Son datos de demostración, no cuentas reales.
+
+## Integración con el backend (Parcial 3)
+
+| Pieza | Archivo | Qué hace |
+|---|---|---|
+| Instancia de Axios | `src/services/api.js` | `baseURL` desde `VITE_API_URL`, `timeout` de 10 s, agrega `Authorization: Bearer <token>` y detecta el 401 de un token vencido. |
+| Services | `src/services/authService.js`, `usuarioService.js` | Una función por operación de la API; devuelven `respuesta.data`. |
+| DTO de entrada | `src/dto/auth.dto.js` | Arma el cuerpo exacto del login y del registro (sin `rol`: lo asigna el servidor). |
+| Sesión | `src/services/sesionService.js`, `src/context/SesionContext.jsx` | Guarda el token, lo recupera al recargar y cierra la sesión cuando vence. |
+| Rutas por rol | `src/routes/RutaProtegida.jsx`, `src/App.jsx` | Sin sesión lleva al login; con un rol sin permiso muestra "Sin permiso". |
+| Mensajes de error | `src/utils/mensajesError.js` | Distingue error del servidor, tiempo agotado y falta de conexión. Sin `alert()`. |
+
+### Dónde se guarda el token y por qué
+
+Se guarda en **`sessionStorage`**:
+
+- **Sobrevive a la recarga** de la página (IE3.3.2) y **se borra al cerrar la pestaña**, así no queda guardado días en el equipo, como pasaría con `localStorage`.
+- **Riesgo:** un script inyectado en la página (XSS) podría leerlo. Se reduce porque React escapa el texto que muestra, no se usa `innerHTML` y el token dura 60 minutos.
+- **Alternativa más segura:** una cookie `HttpOnly` emitida por el backend, que JavaScript no puede leer, pero requiere protección CSRF. Queda como mejora.
+- **Al cerrar sesión o vencer el token:** se borra del navegador y la interfaz vuelve al login. Una copia ya emitida sigue siendo válida hasta su vencimiento, porque el backend no guarda una lista de tokens revocados.
+
+### Permisos en la interfaz
+
+| Ruta | Quién entra |
+|---|---|
+| `/agendar/:id`, `/confirmacion`, `/resultado`, `/mis-citas` | Dueño de mascota |
+| `/admin`, `/admin/servicios`, `/admin/resumen` | Recepcionista y Administrador |
+| `/admin/usuarios` | Solo Administrador |
+| `/perfil` | Cualquier usuario con sesión |
+
+Ocultar un botón o una ruta no es seguridad: el backend vuelve a comprobar el token y el rol en cada solicitud y responde 401 o 403.
 
 ## Material complementario
 
