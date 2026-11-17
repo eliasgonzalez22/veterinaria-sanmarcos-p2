@@ -40,6 +40,8 @@ Aplicación web en React que permite a los dueños de mascotas revisar el catál
 - **Estado y datos:** servicios con `localStorage` (`servicioService`, `usuarioService`, `citaService`) y `ServiciosContext` para compartir el catálogo en toda la app.
 - **Páginas informativas:** Nosotros y Categorías.
 - **Pruebas unitarias con Vitest:** pruebas de funciones, de los tres servicios y de componentes (botón, etiqueta y formulario de login), con reporte de cobertura.
+- **Estilo visual (Parcial 3):** `styles/tema.css` con la paleta de la clínica sobre las variables de Bootstrap, sin estilos en línea y con `lang="es"`.
+- **Integración con el backend (Parcial 3, [PR #3](https://github.com/eliasgonzalez22/veterinaria-sanmarcos-p2/pull/3)):** Axios, login y registro contra la API, sesión persistente con JWT, rutas protegidas por rol y mensajes de error sin `alert()`.
 
 ## Estructura de `src`
 
@@ -59,12 +61,17 @@ src/
 ├── pages/              Inicio, Servicios, DetalleServicio, Ofertas, Blog,
 │                       Contacto, Login, Registro, Agendar, Confirmacion,
 │                       Resultado, MisCitas, Admin, AdminServicios,
-│                       AdminServicioForm, NoEncontrada
-├── context/            ServiciosContext (estado compartido del catálogo)
-├── services/           servicioService, usuarioService, citaService
-│                       (CRUD con localStorage)
+│                       AdminServicioForm, AdminResumen, AdminUsuarios,
+│                       Perfil, SinPermiso, NoEncontrada
+├── routes/             RutaProtegida (acceso por sesión y rol)
+├── context/            ServiciosContext (catálogo), SesionContext (sesión)
+├── services/           api (Axios), authService y usuarioService (API),
+│                       sesionService (token), servicioService y
+│                       citaService (localStorage hasta la semana 16)
+├── dto/                auth.dto (cuerpo del login y del registro)
 ├── hooks/              useTituloPagina
-├── utils/              precios, validaciones
+├── utils/              precios, validaciones, roles, mensajesError
+├── styles/             tema.css (estilo visual propio)
 └── data/               servicios (catálogo inicial de 31 servicios)
 ```
 
@@ -137,6 +144,24 @@ Se guarda en **`sessionStorage`**:
 | `/perfil` | Cualquier usuario con sesión |
 
 Ocultar un botón o una ruta no es seguridad: el backend vuelve a comprobar el token y el rol en cada solicitud y responde 401 o 403.
+
+## Pruebas de integración realizadas (17-11-2026)
+
+Frontend en `localhost:5173` y backend en `localhost:8081` (EC2 con reenvío de puertos de VS Code).
+
+| # | Prueba | Resultado esperado | Obtenido |
+|---|---|---|---|
+| 1 | Login del dueño | `POST /auth/login` 200 y redirige a Mis citas | ✅ |
+| 2 | Recargar la página con sesión | La sesión se mantiene | ✅ |
+| 3 | Login con clave incorrecta | "Correo o contraseña incorrectos" en la página | ✅ |
+| 4 | Registro con un correo existente | "Ya existe una cuenta con ese correo" (409) | ✅ |
+| 5 | `/admin/usuarios` sin sesión y luego ingresar como Administrador | Va al login y vuelve a la página pedida | ✅ |
+| 6 | Lista de usuarios como Administrador | "Cargando usuarios..." y luego la tabla desde MySQL | ✅ |
+| 7 | Cerrar sesión | Se borra el token de `sessionStorage` | ✅ |
+| 8 | Recepcionista o dueño en `/admin/usuarios` | "No tienes permiso para ver esta página" | ✅ |
+| 9 | Backend sin respuesta | "No fue posible contactar la API..." | ✅ |
+
+Pruebas unitarias: `npm run test:run`, 54 pruebas en verde (13 archivos).
 
 ## Material complementario
 
