@@ -5,7 +5,7 @@ export default function Footer(props) {
   }
 
   return (
-    <footer className="text-center text-muted py-3 border-top mt-4">
+    <footer className="pie-pagina text-center py-4 mt-5">
       <p className="mb-1">© 2026 Veterinaria San Marcos · Rancagua</p>
       <a href="/" onClick={irAlInicio}>Volver al inicio</a>
     </footer>
