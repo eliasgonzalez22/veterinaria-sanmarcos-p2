@@ -1,44 +1,39 @@
-import {
-  listarUsuarios,
-  registrarUsuario,
-  iniciarSesion,
-  obtenerSesion,
-  cerrarSesion,
-} from './usuarioService'
+// Mock del service: se reemplaza la instancia de Axios por funciones falsas (vi.fn),
+// así la prueba no necesita el backend encendido y controla qué "responde" la API.
+vi.mock('./api', () => ({
+  api: { get: vi.fn(), put: vi.fn() },
+}))
 
-describe('usuarioService', () => {
+import { api } from './api'
+import { listarUsuarios, actualizarUsuario } from './usuarioService'
+
+describe('usuarioService (API)', () => {
   beforeEach(() => {
-    localStorage.clear()
+    vi.clearAllMocks()
   })
 
-  it('parte con 2 usuarios iniciales', () => {
-    expect(listarUsuarios()).toHaveLength(2)
+  it('listarUsuarios hace GET /usuarios y devuelve respuesta.data', async () => {
+    const lista = [{ id: 1, nombre: 'Administrador', email: 'admin@sanmarcos.cl', rol: 'ADMINISTRADOR' }]
+    api.get.mockResolvedValue({ status: 200, data: lista })
+
+    const resultado = await listarUsuarios()
+
+    expect(api.get).toHaveBeenCalledWith('/usuarios')
+    expect(resultado).toEqual(lista)
   })
 
-  it('inicia sesión con credenciales correctas', () => {
-    const usuario = iniciarSesion('dueno@sanmarcos.cl', '123456')
-    expect(usuario.rol).toBe('dueno')
-    expect(obtenerSesion().email).toBe('dueno@sanmarcos.cl')
+  it('actualizarUsuario hace PUT /usuarios/{id} solo con los cambios', async () => {
+    api.put.mockResolvedValue({ status: 200, data: { id: 3, nombre: 'Ana Pérez' } })
+
+    const resultado = await actualizarUsuario(3, { nombre: 'Ana Pérez' })
+
+    expect(api.put).toHaveBeenCalledWith('/usuarios/3', { nombre: 'Ana Pérez' })
+    expect(resultado.nombre).toBe('Ana Pérez')
   })
 
-  it('devuelve null con clave incorrecta', () => {
-    expect(iniciarSesion('dueno@sanmarcos.cl', '000000')).toBeNull()
-  })
+  it('propaga el error 403 para que la página muestre el mensaje', async () => {
+    api.get.mockRejectedValue({ response: { status: 403, data: { mensaje: 'Sin permiso' } } })
 
-  it('no registra un correo repetido', () => {
-    const datos = { nombre: 'Ana', email: 'dueno@sanmarcos.cl', clave: '123456' }
-    expect(registrarUsuario(datos)).toBeNull()
-  })
-
-  it('registra un usuario nuevo como dueño', () => {
-    const nuevo = registrarUsuario({ nombre: 'Luis', email: 'luis@correo.cl', clave: '123456' })
-    expect(nuevo.id).toBe(3)
-    expect(nuevo.rol).toBe('dueno')
-  })
-
-  it('cierra la sesión', () => {
-    iniciarSesion('dueno@sanmarcos.cl', '123456')
-    cerrarSesion()
-    expect(obtenerSesion()).toBeNull()
+    await expect(listarUsuarios()).rejects.toMatchObject({ response: { status: 403 } })
   })
 })
