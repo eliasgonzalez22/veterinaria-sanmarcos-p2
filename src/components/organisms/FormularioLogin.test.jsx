@@ -20,4 +20,9 @@ describe('FormularioLogin', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Ingresar' }))
     expect(alEnviar).toHaveBeenCalledWith({ email: 'ana@correo.cl', clave: '123456' })
   })
+
+  it('mientras espera la respuesta de la API, deshabilita el botón y muestra "Ingresando..."', () => {
+    render(<FormularioLogin onEnviar={vi.fn()} cargando />)
+    expect(screen.getByRole('button', { name: 'Ingresando...' })).toBeDisabled()
+  })
 })
