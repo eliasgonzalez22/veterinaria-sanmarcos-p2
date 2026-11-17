@@ -1,5 +1,6 @@
 import { Container, Navbar as BarraNav, Nav, NavDropdown } from 'react-bootstrap'
 import BuscadorServicios from '../molecules/BuscadorServicios'
+import { esPersonal } from '../../utils/roles'
 
 export default function Navbar(props) {
   function ir(evento, ruta) {
@@ -36,7 +37,7 @@ export default function Navbar(props) {
               </NavDropdown>
               {props.sesion ? (
                 <>
-                  {props.sesion.rol === 'recepcionista' ? (
+                  {esPersonal(props.sesion) ? (
                     <Nav.Link href="/admin" onClick={(e) => ir(e, '/admin')}>Panel</Nav.Link>
                   ) : (
                     <Nav.Link href="/mis-citas" onClick={(e) => ir(e, '/mis-citas')}>Mis citas</Nav.Link>
