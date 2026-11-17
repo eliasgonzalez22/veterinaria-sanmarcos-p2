@@ -6,14 +6,19 @@ import CampoFormulario from '../components/molecules/CampoFormulario'
 import Boton from '../components/atoms/Boton'
 import { useTituloPagina } from '../hooks/useTituloPagina'
 import { validarNombre } from '../utils/validaciones'
-import { obtenerSesion, actualizarUsuario } from '../services/usuarioService'
+import { useSesion } from '../context/SesionContext'
+import { actualizarUsuario } from '../services/usuarioService'
+import { obtenerMensajeError } from '../utils/mensajesError'
+import { nombreRol } from '../utils/roles'
 
 export default function Perfil() {
   const navigate = useNavigate()
-  const sesion = obtenerSesion()
+  const { sesion, actualizarSesion } = useSesion()
   const [nombre, setNombre] = useState(sesion ? sesion.nombre : '')
   const [error, setError] = useState('')
+  const [mensajeApi, setMensajeApi] = useState('')
   const [guardado, setGuardado] = useState(false)
+  const [cargando, setCargando] = useState(false)
   useTituloPagina('Perfil')
 
   if (!sesion) {
@@ -25,14 +30,24 @@ export default function Perfil() {
     )
   }
 
-  function guardar(evento) {
+  async function guardar(evento) {
     evento.preventDefault()
     const mensaje = validarNombre(nombre)
     setError(mensaje)
     setGuardado(false)
-    if (!mensaje) {
-      actualizarUsuario(sesion.id, { nombre: nombre.trim() })
+    setMensajeApi('')
+    if (mensaje) return
+
+    setCargando(true)
+    try {
+      // PUT /usuarios/{id}: el backend comprueba que el id sea el del token (o que sea admin).
+      const actualizado = await actualizarUsuario(sesion.id, { nombre: nombre.trim() })
+      actualizarSesion(actualizado)
       setGuardado(true)
+    } catch (e) {
+      setMensajeApi(obtenerMensajeError(e))
+    } finally {
+      setCargando(false)
     }
   }
 
@@ -40,11 +55,12 @@ export default function Perfil() {
     <PlantillaPublica>
       <Row className="justify-content-center">
         <Col xs={12} md={8} lg={5}>
-          <Form onSubmit={guardar} noValidate className="card card-body shadow-sm">
+          <Form onSubmit={guardar} noValidate className="card card-body shadow-sm" aria-busy={cargando}>
             <h1 className="h4 mb-3">Mi perfil</h1>
             <p className="mb-1">Correo: {sesion.email}</p>
-            <p>Rol: {sesion.rol === 'recepcionista' ? 'Recepcionista' : 'Dueño'}</p>
+            <p>Rol: {nombreRol(sesion.rol)}</p>
             {guardado && <Alert variant="success">Perfil actualizado</Alert>}
+            {mensajeApi && <Alert variant="danger" role="alert">{mensajeApi}</Alert>}
             <CampoFormulario
               id="perfil-nombre"
               etiqueta="Nombre"
@@ -52,7 +68,7 @@ export default function Perfil() {
               onCambio={setNombre}
               error={error}
             />
-            <Boton tipo="submit">Guardar</Boton>
+            <Boton tipo="submit" disabled={cargando}>{cargando ? 'Guardando...' : 'Guardar'}</Boton>
           </Form>
         </Col>
       </Row>

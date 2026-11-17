@@ -4,12 +4,12 @@ import PlantillaPublica from '../components/templates/PlantillaPublica'
 import FilaCita from '../components/molecules/FilaCita'
 import Boton from '../components/atoms/Boton'
 import { useTituloPagina } from '../hooks/useTituloPagina'
-import { obtenerSesion } from '../services/usuarioService'
+import { useSesion } from '../context/SesionContext'
 import { listarCitasDeUsuario } from '../services/citaService'
 
 export default function MisCitas() {
   const navigate = useNavigate()
-  const sesion = obtenerSesion()
+  const { sesion } = useSesion()
   useTituloPagina('Mis citas')
 
   if (!sesion) {

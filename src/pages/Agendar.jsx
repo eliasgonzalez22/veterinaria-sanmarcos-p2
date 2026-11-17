@@ -5,14 +5,14 @@ import FormularioSolicitudCita from '../components/organisms/FormularioSolicitud
 import Boton from '../components/atoms/Boton'
 import { useServicios } from '../context/ServiciosContext'
 import { useTituloPagina } from '../hooks/useTituloPagina'
-import { obtenerSesion } from '../services/usuarioService'
+import { useSesion } from '../context/SesionContext'
 import { guardarSolicitudEnCurso } from '../services/citaService'
 
 export default function Agendar() {
   const navigate = useNavigate()
   const params = useParams()
   const contexto = useServicios()
-  const sesion = obtenerSesion()
+  const { sesion } = useSesion()
   const servicio = contexto.servicios.find((s) => s.id === Number(params.id))
 
   useTituloPagina('Agendar cita')

@@ -19,8 +19,8 @@ export default function FormularioLogin(props) {
   }
 
   return (
-    <Form onSubmit={enviar} noValidate className="card card-body shadow-sm">
-      <h2 className="h4 mb-3">Ingresar</h2>
+    <Form onSubmit={enviar} noValidate className="card card-body shadow-sm" aria-busy={Boolean(props.cargando)}>
+      <h1 className="h4 mb-3">Ingresar</h1>
       <CampoFormulario
         id="login-email"
         etiqueta="Correo"
@@ -37,7 +37,9 @@ export default function FormularioLogin(props) {
         onCambio={setClave}
         error={errores.clave}
       />
-      <Boton tipo="submit">Ingresar</Boton>
+      <Boton tipo="submit" disabled={props.cargando}>
+        {props.cargando ? 'Ingresando...' : 'Ingresar'}
+      </Boton>
     </Form>
   )
 }

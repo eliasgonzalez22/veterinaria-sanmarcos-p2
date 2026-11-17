@@ -1,51 +1,16 @@
-const CLAVE = 'usuarios'
-const CLAVE_SESION = 'sesion'
+// usuarioService: CRUD de usuarios contra la API (antes usaba localStorage).
+// Los permisos los vuelve a comprobar el backend: listar es solo para ADMINISTRADOR,
+// y un usuario solo puede modificar su propia cuenta.
+import { api } from './api'
 
-const iniciales = [
-  { id: 1, nombre: 'Ana Dueña', email: 'dueno@sanmarcos.cl', clave: '123456', rol: 'dueno' },
-  { id: 2, nombre: 'Rita Recepción', email: 'recepcion@sanmarcos.cl', clave: '123456', rol: 'recepcionista' },
-]
-
-export function listarUsuarios() {
-  const guardado = localStorage.getItem(CLAVE)
-  if (guardado) return JSON.parse(guardado)
-  localStorage.setItem(CLAVE, JSON.stringify(iniciales))
-  return iniciales
+// GET /usuarios -> arreglo de usuarios (solo ADMINISTRADOR; si no, el backend responde 403).
+export async function listarUsuarios() {
+  const respuesta = await api.get('/usuarios')
+  return respuesta.data
 }
 
-export function registrarUsuario(datos) {
-  const usuarios = listarUsuarios()
-  if (usuarios.some((u) => u.email === datos.email)) return null
-  const id = usuarios.length ? Math.max(...usuarios.map((u) => u.id)) + 1 : 1
-  const nuevo = { id: id, nombre: datos.nombre, email: datos.email, clave: datos.clave, rol: 'dueno' }
-  localStorage.setItem(CLAVE, JSON.stringify([...usuarios, nuevo]))
-  return nuevo
-}
-
-export function iniciarSesion(email, clave) {
-  const usuario = listarUsuarios().find((u) => u.email === email && u.clave === clave)
-  if (!usuario) return null
-  localStorage.setItem(CLAVE_SESION, JSON.stringify(usuario))
-  return usuario
-}
-
-export function obtenerSesion() {
-  const guardado = localStorage.getItem(CLAVE_SESION)
-  return guardado ? JSON.parse(guardado) : null
-}
-
-export function cerrarSesion() {
-  localStorage.removeItem(CLAVE_SESION)
-}
-
-export function actualizarUsuario(id, cambios) {
-  const usuarios = listarUsuarios()
-  const nuevos = usuarios.map((u) => (u.id === id ? { ...u, ...cambios } : u))
-  localStorage.setItem(CLAVE, JSON.stringify(nuevos))
-  const actualizado = nuevos.find((u) => u.id === id) ?? null
-  const sesion = obtenerSesion()
-  if (actualizado && sesion && sesion.id === id) {
-    localStorage.setItem(CLAVE_SESION, JSON.stringify(actualizado))
-  }
-  return actualizado
+// PUT /usuarios/{id} -> el usuario actualizado. Solo se envían los campos que cambian.
+export async function actualizarUsuario(id, cambios) {
+  const respuesta = await api.put(`/usuarios/${id}`, cambios)
+  return respuesta.data
 }

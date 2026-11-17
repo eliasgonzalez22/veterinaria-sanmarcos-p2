@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Row, Col, Card, Table } from 'react-bootstrap'
 import PlantillaAdmin from '../components/templates/PlantillaAdmin'
@@ -7,6 +8,8 @@ import { useServicios } from '../context/ServiciosContext'
 import { useTituloPagina } from '../hooks/useTituloPagina'
 import { listarCitas } from '../services/citaService'
 import { listarUsuarios } from '../services/usuarioService'
+import { useSesion } from '../context/SesionContext'
+import { ROLES } from '../utils/roles'
 
 function Indicador(props) {
   return (
@@ -23,10 +26,22 @@ export default function AdminResumen() {
   const navigate = useNavigate()
   const contexto = useServicios()
   const citas = listarCitas()
-  const usuarios = listarUsuarios()
+  const { sesion } = useSesion()
+  // Cantidad de usuarios desde la API. Solo el Administrador puede listarlos (si no, el backend da 403).
+  const [totalUsuarios, setTotalUsuarios] = useState(null)
   const pendientes = citas.filter((c) => c.estado === 'pendiente')
   const confirmadas = citas.filter((c) => c.estado === 'confirmada')
   useTituloPagina('Admin · Resumen')
+
+  useEffect(() => {
+    if (!sesion || sesion.rol !== ROLES.ADMINISTRADOR) return undefined
+    let vigente = true
+    listarUsuarios()
+      .then((lista) => { if (vigente) setTotalUsuarios(lista.length) })
+      .catch(() => { if (vigente) setTotalUsuarios(null) })
+    // Si la página se desmonta antes de la respuesta, no se actualiza el estado.
+    return () => { vigente = false }
+  }, [sesion])
 
   return (
     <PlantillaAdmin>
@@ -37,7 +52,7 @@ export default function AdminResumen() {
         <Col><Indicador titulo="Confirmadas" valor={confirmadas.length} /></Col>
         <Col><Indicador titulo="Servicios" valor={contexto.servicios.length} /></Col>
       </Row>
-      <p>Usuarios registrados: <strong>{usuarios.length}</strong></p>
+      {totalUsuarios !== null && <p>Usuarios registrados: <strong>{totalUsuarios}</strong></p>}
 
       <section aria-labelledby="titulo-criticas" className="mt-4">
         <h2 id="titulo-criticas" className="h5">Ítems críticos: citas pendientes de atender</h2>
