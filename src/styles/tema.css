@@ -1,0 +1,299 @@
+/* === 1. Paleta y variables globales === */
+:root {
+  /* Colores propios de la clínica */
+  --vsm-verde: #1b7f5f;          /* verde corporativo principal */
+  --vsm-verde-oscuro: #135c45;   /* hover, navbar y pie de página */
+  --vsm-verde-claro: #e6f3ed;    /* fondos suaves y encabezados de tabla */
+  --vsm-crema: #f6f8f5;          /* fondo general de la página */
+  --vsm-texto: #23302b;          /* texto principal (gris verdoso, no negro puro) */
+  --vsm-texto-suave: #5b6b64;    /* textos secundarios */
+  --vsm-acento: #f2a541;         /* detalles cálidos (ofertas, foco) */
+  --vsm-radio: 14px;
+  --vsm-sombra: 0 2px 10px rgba(19, 92, 69, 0.08);
+  --vsm-sombra-hover: 0 8px 22px rgba(19, 92, 69, 0.16);
+
+  /* Variables de Bootstrap 5.3 que reutilizan la paleta */
+  --bs-success: #1b7f5f;
+  --bs-success-rgb: 27, 127, 95;
+  --bs-body-bg: var(--vsm-crema);
+  --bs-body-color: var(--vsm-texto);
+  --bs-secondary-color: var(--vsm-texto-suave);
+  --bs-link-color: var(--vsm-verde);
+  --bs-link-color-rgb: 27, 127, 95;
+  --bs-link-hover-color: var(--vsm-verde-oscuro);
+  --bs-link-hover-color-rgb: 19, 92, 69;
+  --bs-border-radius: 10px;
+  --bs-border-radius-lg: var(--vsm-radio);
+  --bs-body-font-family: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* === 2. Estructura general: el pie de página queda siempre abajo === */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#root > main {
+  flex: 1 0 auto;
+}
+
+/* === 3. Tipografía === */
+h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5, .display-5, .display-6 {
+  font-family: 'Nunito', system-ui, sans-serif;
+  color: var(--vsm-verde-oscuro);
+  line-height: 1.25;
+}
+
+/* Sobre fondos oscuros (encabezado del panel) los títulos usan el color del texto */
+.bg-dark :is(h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5) {
+  color: inherit;
+}
+
+.lead {
+  color: var(--vsm-texto-suave);
+}
+
+/* Encabezado del panel de recepción con el tono de la marca */
+header.bg-dark {
+  background-color: #17322a !important;
+}
+
+/* === 4. Barra de navegación === */
+.navbar.bg-success {
+  background: linear-gradient(90deg, var(--vsm-verde-oscuro), var(--vsm-verde)) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.navbar-brand {
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.navbar-dark .nav-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.88);
+  transition: color 0.2s;
+}
+
+.navbar-dark .nav-link:hover,
+.navbar-dark .nav-link:focus-visible {
+  color: #ffffff;
+}
+
+/* Línea suave bajo el enlace al pasar el mouse (solo en escritorio) */
+@media (min-width: 768px) {
+  .navbar-dark .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.2rem;
+    height: 2px;
+    background: var(--vsm-acento);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+  }
+
+  .navbar-dark .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Menú desplegado en celular: separado y legible */
+@media (max-width: 767.98px) {
+  .navbar-collapse {
+    padding-top: 0.75rem;
+  }
+
+  .navbar-collapse form {
+    margin-top: 0.5rem;
+  }
+}
+
+.dropdown-menu {
+  border: none;
+  border-radius: var(--vsm-radio);
+  box-shadow: var(--vsm-sombra-hover);
+}
+
+.dropdown-item:active {
+  background-color: var(--vsm-verde);
+}
+
+/* === 5. Botones === */
+.btn {
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  --bs-btn-bg: var(--vsm-verde);
+  --bs-btn-border-color: var(--vsm-verde);
+  --bs-btn-hover-bg: var(--vsm-verde-oscuro);
+  --bs-btn-hover-border-color: var(--vsm-verde-oscuro);
+  --bs-btn-active-bg: var(--vsm-verde-oscuro);
+  --bs-btn-active-border-color: var(--vsm-verde-oscuro);
+  box-shadow: 0 4px 12px rgba(27, 127, 95, 0.25);
+}
+
+.btn-outline-success {
+  --bs-btn-color: var(--vsm-verde);
+  --bs-btn-border-color: var(--vsm-verde);
+  --bs-btn-hover-bg: var(--vsm-verde);
+  --bs-btn-hover-border-color: var(--vsm-verde);
+  --bs-btn-active-bg: var(--vsm-verde-oscuro);
+}
+
+/* El buscador de la barra usa un botón claro sobre fondo verde */
+.navbar .btn-outline-light:hover {
+  color: var(--vsm-verde-oscuro);
+}
+
+/* === 6. Tarjetas === */
+.card {
+  border: none;
+  border-radius: var(--vsm-radio);
+  box-shadow: var(--vsm-sombra);
+}
+
+/* Solo las tarjetas del catálogo y de categorías "se levantan" al pasar el mouse */
+article.card,
+.list-unstyled .card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article.card:hover,
+.list-unstyled .card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--vsm-sombra-hover);
+}
+
+.card-title {
+  color: var(--vsm-verde-oscuro);
+}
+
+/* === 7. Portada (página de inicio) === */
+.portada {
+  background: linear-gradient(135deg, var(--vsm-verde-claro), #ffffff 70%);
+  border-radius: calc(var(--vsm-radio) * 1.5);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.imagen-portada {
+  width: 100%;
+  max-height: 440px;
+  object-fit: cover;
+}
+
+/* === 8. Formularios === */
+.form-control,
+.form-select {
+  border-radius: 10px;
+  border-color: #cfdcd5;
+  padding: 0.55rem 0.85rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--vsm-verde);
+  box-shadow: 0 0 0 0.2rem rgba(27, 127, 95, 0.2);
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--vsm-texto);
+}
+
+/* El mensaje de error se distingue sin depender solo del color rojo */
+.invalid-feedback {
+  font-weight: 600;
+}
+
+/* === 9. Tablas del panel === */
+.table {
+  --bs-table-striped-bg: rgba(27, 127, 95, 0.04);
+  border-radius: var(--vsm-radio);
+  overflow: hidden;
+}
+
+.table thead th {
+  background: var(--vsm-verde-claro);
+  color: var(--vsm-verde-oscuro);
+  border-bottom: none;
+  font-weight: 700;
+}
+
+/* === 10. Etiquetas y mensajes (Alert de Bootstrap, no alert() del navegador) === */
+.badge {
+  border-radius: 999px;
+  padding: 0.4em 0.75em;
+  font-weight: 600;
+}
+
+.alert {
+  border: none;
+  border-left: 5px solid currentColor;
+  border-radius: var(--vsm-radio);
+}
+
+/* === 11. Pie de página === */
+.pie-pagina {
+  background: var(--vsm-verde-oscuro);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.pie-pagina a {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.pie-pagina a:hover {
+  color: var(--vsm-acento);
+}
+
+/* === 12. Accesibilidad === */
+/* Foco visible con el teclado en enlaces y botones */
+a:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--vsm-acento);
+  outline-offset: 2px;
+}
+
+/* Si la persona pidió menos movimiento en su sistema, se quitan las animaciones */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+
+  .btn:hover,
+  article.card:hover,
+  .list-unstyled .card:hover {
+    transform: none;
+  }
+}
+
+/* === 13. Impresión de la ficha (botón "Imprimir ficha" del panel) === */
+@media print {
+  .navbar,
+  .pie-pagina,
+  .btn {
+    display: none !important;
+  }
+
+  .card {
+    box-shadow: none;
+    border: 1px solid #cccccc;
+  }
+}
