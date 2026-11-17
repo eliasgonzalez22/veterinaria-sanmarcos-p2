@@ -104,8 +104,8 @@ header.bg-dark .nav-link.activo {
   color: #ffffff;
 }
 
-/* Línea suave bajo el enlace al pasar el mouse (solo en escritorio) */
-@media (min-width: 768px) {
+/* Línea suave bajo el enlace al pasar el mouse (solo cuando el menú está desplegado en fila, desde 1200 px) */
+@media (min-width: 1200px) {
   .navbar-dark .nav-link::after {
     content: '';
     position: absolute;
@@ -123,8 +123,8 @@ header.bg-dark .nav-link.activo {
   }
 }
 
-/* Menú desplegado en celular: separado y legible */
-@media (max-width: 767.98px) {
+/* Menú tipo hamburguesa (bajo 1200 px): separado y legible */
+@media (max-width: 1199.98px) {
   .navbar-collapse {
     padding-top: 0.75rem;
   }
@@ -132,6 +132,16 @@ header.bg-dark .nav-link.activo {
   .navbar-collapse form {
     margin-top: 0.5rem;
   }
+}
+
+/* Los textos del menú no se parten en dos líneas ("Crear cuenta") */
+.navbar .nav-link {
+  white-space: nowrap;
+}
+
+/* Ningún elemento puede ensanchar la página más que la ventana (evita el borde blanco a la derecha) */
+body {
+  overflow-x: hidden;
 }
 
 .dropdown-menu {
