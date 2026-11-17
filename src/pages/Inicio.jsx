@@ -13,7 +13,7 @@ export default function Inicio() {
 
   return (
     <PlantillaPublica>
-      <section className="py-4 py-lg-5" aria-labelledby="titulo-inicio">
+      <section className="portada py-4 py-lg-5" aria-labelledby="titulo-inicio">
         <div className="row align-items-center g-4">
           <div className="col-12 col-lg-6 text-center text-lg-start">
             <h1 id="titulo-inicio" className="display-5 fw-bold">Veterinaria San Marcos</h1>
@@ -24,8 +24,7 @@ export default function Inicio() {
             <img
               src={imagenVeterinaria}
               alt="Veterinaria atendiendo a un cachorro y un gatito"
-              className="img-fluid rounded-4 shadow"
-              style={{ width: '100%', maxHeight: '440px', objectFit: 'cover' }}
+              className="img-fluid rounded-4 shadow imagen-portada"
             />
           </div>
         </div>
