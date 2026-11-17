@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Container, Nav, Alert } from 'react-bootstrap'
 import Boton from '../atoms/Boton'
 import { useSesion } from '../../context/SesionContext'
@@ -6,6 +6,7 @@ import { esPersonal, nombreRol, ROLES } from '../../utils/roles'
 
 export default function PlantillaAdmin(props) {
   const navigate = useNavigate()
+  const ubicacion = useLocation()
   const { sesion, salir: cerrarSesion } = useSesion()
 
   // Segunda barrera en la interfaz (la primera es RutaProtegida en App.jsx).
@@ -17,6 +18,20 @@ export default function PlantillaAdmin(props) {
         <Boton onClick={() => navigate('/login')}>Ingresar</Boton>
       </Container>
     )
+  }
+
+  // Marca el enlace de la página actual (clase "activo" y aria-current para lectores de pantalla).
+  function esActual(ruta) {
+    return ruta === '/admin' ? ubicacion.pathname === '/admin' : ubicacion.pathname.startsWith(ruta)
+  }
+
+  function propsEnlace(ruta) {
+    return {
+      href: ruta,
+      onClick: (e) => ir(e, ruta),
+      className: esActual(ruta) ? 'activo' : undefined,
+      'aria-current': esActual(ruta) ? 'page' : undefined,
+    }
   }
 
   function ir(evento, ruta) {
@@ -36,12 +51,12 @@ export default function PlantillaAdmin(props) {
           <p className="h5 mb-0">Panel · Veterinaria San Marcos</p>
           <nav aria-label="Administración">
             <Nav>
-              <Nav.Link href="/admin" onClick={(e) => ir(e, '/admin')}>Citas</Nav.Link>
-              <Nav.Link href="/admin/servicios" onClick={(e) => ir(e, '/admin/servicios')}>Servicios</Nav.Link>
-              <Nav.Link href="/admin/resumen" onClick={(e) => ir(e, '/admin/resumen')}>Resumen</Nav.Link>
+              <Nav.Link {...propsEnlace('/admin')}>Citas</Nav.Link>
+              <Nav.Link {...propsEnlace('/admin/servicios')}>Servicios</Nav.Link>
+              <Nav.Link {...propsEnlace('/admin/resumen')}>Resumen</Nav.Link>
               {/* Gestionar usuarios es solo del Administrador (documento del caso, sección 0.2). */}
               {sesion.rol === ROLES.ADMINISTRADOR && (
-                <Nav.Link href="/admin/usuarios" onClick={(e) => ir(e, '/admin/usuarios')}>Usuarios</Nav.Link>
+                <Nav.Link {...propsEnlace('/admin/usuarios')}>Usuarios</Nav.Link>
               )}
             </Nav>
           </nav>

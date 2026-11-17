@@ -59,6 +59,26 @@ header.bg-dark {
   background-color: #17322a !important;
 }
 
+/* Enlaces del panel: claros sobre el fondo oscuro, con contraste suficiente para leerlos */
+header.bg-dark .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+header.bg-dark .nav-link:hover,
+header.bg-dark .nav-link:focus-visible {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Página actual del panel marcada con el acento cálido */
+header.bg-dark .nav-link.activo {
+  color: #ffffff;
+  box-shadow: inset 0 -3px 0 var(--vsm-acento);
+}
+
 /* === 4. Barra de navegación === */
 .navbar.bg-success {
   background: linear-gradient(90deg, var(--vsm-verde-oscuro), var(--vsm-verde)) !important;
