@@ -8,6 +8,20 @@ export default function Navbar(props) {
     props.onNavegar(ruta)
   }
 
+  function esActual(ruta) {
+    const actual = props.rutaActual || ''
+    return ruta === '/' ? actual === '/' : actual.startsWith(ruta)
+  }
+
+  function enlace(ruta) {
+    return {
+      href: ruta,
+      onClick: (e) => ir(e, ruta),
+      className: esActual(ruta) ? 'activo' : undefined,
+      'aria-current': esActual(ruta) ? 'page' : undefined,
+    }
+  }
+
   return (
     <header>
       <BarraNav expand="xl" bg="success" variant="dark" aria-label="Principal">
@@ -18,13 +32,13 @@ export default function Navbar(props) {
           <BarraNav.Toggle aria-controls="menuPrincipal" aria-label="Abrir menú" />
           <BarraNav.Collapse id="menuPrincipal">
             <Nav className="me-auto">
-              <Nav.Link href="/" onClick={(e) => ir(e, '/')}>Inicio</Nav.Link>
-              <Nav.Link href="/servicios" onClick={(e) => ir(e, '/servicios')}>Servicios</Nav.Link>
-              <Nav.Link href="/contacto" onClick={(e) => ir(e, '/contacto')}>Contacto</Nav.Link>
-              <Nav.Link href="/ofertas" onClick={(e) => ir(e, '/ofertas')}>Ofertas</Nav.Link>
-              <Nav.Link href="/blog" onClick={(e) => ir(e, '/blog')}>Blog</Nav.Link>
-              <Nav.Link href="/nosotros" onClick={(e) => ir(e, '/nosotros')}>Nosotros</Nav.Link>
-              <NavDropdown title="Categorías" id="menu-categorias">
+              <Nav.Link {...enlace('/')}>Inicio</Nav.Link>
+              <Nav.Link {...enlace('/servicios')}>Servicios</Nav.Link>
+              <Nav.Link {...enlace('/contacto')}>Contacto</Nav.Link>
+              <Nav.Link {...enlace('/ofertas')}>Ofertas</Nav.Link>
+              <Nav.Link {...enlace('/blog')}>Blog</Nav.Link>
+              <Nav.Link {...enlace('/nosotros')}>Nosotros</Nav.Link>
+              <NavDropdown title="Categorías" id="menu-categorias" active={esActual('/categoria')}>
                 {props.categorias.map((c) => (
                   <NavDropdown.Item
                     key={c}
@@ -38,11 +52,11 @@ export default function Navbar(props) {
               {props.sesion ? (
                 <>
                   {esPersonal(props.sesion) ? (
-                    <Nav.Link href="/admin" onClick={(e) => ir(e, '/admin')}>Panel</Nav.Link>
+                    <Nav.Link {...enlace('/admin')}>Panel</Nav.Link>
                   ) : (
-                    <Nav.Link href="/mis-citas" onClick={(e) => ir(e, '/mis-citas')}>Mis citas</Nav.Link>
+                    <Nav.Link {...enlace('/mis-citas')}>Mis citas</Nav.Link>
                   )}
-                  <Nav.Link href="/perfil" onClick={(e) => ir(e, '/perfil')}>Perfil</Nav.Link>
+                  <Nav.Link {...enlace('/perfil')}>Perfil</Nav.Link>
                   <Nav.Link
                     href="/"
                     onClick={(e) => {
@@ -55,8 +69,8 @@ export default function Navbar(props) {
                 </>
               ) : (
                 <>
-                  <Nav.Link href="/login" onClick={(e) => ir(e, '/login')}>Ingresar</Nav.Link>
-                  <Nav.Link href="/registro" onClick={(e) => ir(e, '/registro')}>Crear cuenta</Nav.Link>
+                  <Nav.Link {...enlace('/login')}>Ingresar</Nav.Link>
+                  <Nav.Link {...enlace('/registro')}>Crear cuenta</Nav.Link>
                 </>
               )}
             </Nav>
