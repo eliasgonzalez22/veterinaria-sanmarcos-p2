@@ -46,7 +46,7 @@ export default function PlantillaAdmin(props) {
 
   return (
     <>
-      <header className="bg-dark text-white">
+      <header className="encabezado-panel">
         <Container className="d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
           <p className="h5 mb-0">Panel · Veterinaria San Marcos</p>
           <nav aria-label="Administración">

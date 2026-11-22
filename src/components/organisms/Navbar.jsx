@@ -24,7 +24,7 @@ export default function Navbar(props) {
 
   return (
     <header>
-      <BarraNav expand="xl" bg="success" variant="dark" aria-label="Principal">
+      <BarraNav expand="xl" variant="dark" className="barra-principal" aria-label="Principal">
         <Container>
           <BarraNav.Brand href="/" onClick={(e) => ir(e, '/')}>
             🐾 Veterinaria San Marcos
