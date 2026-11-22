@@ -42,7 +42,7 @@ export default function FormularioServicio(props) {
 
   return (
     <Form onSubmit={enviar} noValidate className="card card-body shadow-sm">
-      <h2 className="h4 mb-3">{props.inicial ? 'Editar servicio' : 'Nuevo servicio'}</h2>
+      <h1 className="h4 mb-3">{props.inicial ? 'Editar servicio' : 'Nuevo servicio'}</h1>
       <CampoFormulario id="srv-codigo" etiqueta="Código" valor={datos.codigo} onCambio={(v) => cambiar('codigo', v)} error={errores.codigo} />
       <CampoFormulario id="srv-nombre" etiqueta="Nombre" valor={datos.nombre} onCambio={(v) => cambiar('nombre', v)} error={errores.nombre} />
       <Form.Group className="mb-3" controlId="srv-categoria">
