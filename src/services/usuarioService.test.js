@@ -1,11 +1,11 @@
 // Mock del service: se reemplaza la instancia de Axios por funciones falsas (vi.fn),
 // así la prueba no necesita el backend encendido y controla qué "responde" la API.
 vi.mock('./api', () => ({
-  api: { get: vi.fn(), put: vi.fn() },
+  api: { get: vi.fn(), put: vi.fn(), post: vi.fn(), delete: vi.fn() },
 }))
 
 import { api } from './api'
-import { listarUsuarios, actualizarUsuario } from './usuarioService'
+import { listarUsuarios, actualizarUsuario, crearUsuario, desactivarUsuario } from './usuarioService'
 
 describe('usuarioService (API)', () => {
   beforeEach(() => {
@@ -35,5 +35,23 @@ describe('usuarioService (API)', () => {
     api.get.mockRejectedValue({ response: { status: 403, data: { mensaje: 'Sin permiso' } } })
 
     await expect(listarUsuarios()).rejects.toMatchObject({ response: { status: 403 } })
+  })
+
+  it('crearUsuario hace POST /usuarios con el DTO (incluye el rol)', async () => {
+    const dto = { nombre: 'Nueva Recepcion', email: 'nueva@sanmarcos.cl', clave: '123456', rol: 'RECEPCIONISTA' }
+    api.post.mockResolvedValue({ status: 201, data: { id: 9, ...dto, activo: true } })
+
+    const creado = await crearUsuario(dto)
+
+    expect(api.post).toHaveBeenCalledWith('/usuarios', dto)
+    expect(creado.id).toBe(9)
+  })
+
+  it('desactivarUsuario hace DELETE /usuarios/{id}', async () => {
+    api.delete.mockResolvedValue({ status: 204 })
+
+    await desactivarUsuario(9)
+
+    expect(api.delete).toHaveBeenCalledWith('/usuarios/9')
   })
 })
