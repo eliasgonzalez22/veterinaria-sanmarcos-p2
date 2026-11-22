@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Navbar from '../organisms/Navbar'
 import Footer from '../organisms/Footer'
 import { Container } from 'react-bootstrap'
@@ -7,6 +7,7 @@ import { useSesion } from '../../context/SesionContext'
 
 export default function PlantillaPublica(props) {
   const navigate = useNavigate()
+  const ubicacion = useLocation()
   const contexto = useServicios()
   const categorias = [...new Set(contexto.servicios.map((s) => s.categoria))]
   const { sesion, salir: cerrarSesion } = useSesion()
@@ -20,6 +21,7 @@ export default function PlantillaPublica(props) {
     <>
       <Navbar
         categorias={categorias}
+        rutaActual={ubicacion.pathname}
         onNavegar={navigate}
         sesion={sesion}
         onSalir={salir}
