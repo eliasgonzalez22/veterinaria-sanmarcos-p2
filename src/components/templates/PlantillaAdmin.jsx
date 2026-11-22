@@ -9,8 +9,6 @@ export default function PlantillaAdmin(props) {
   const ubicacion = useLocation()
   const { sesion, salir: cerrarSesion } = useSesion()
 
-  // Segunda barrera en la interfaz (la primera es RutaProtegida en App.jsx).
-  // La seguridad real está en el backend, que responde 401/403.
   if (!esPersonal(sesion)) {
     return (
       <Container as="main" className="py-4">
@@ -20,7 +18,6 @@ export default function PlantillaAdmin(props) {
     )
   }
 
-  // Marca el enlace de la página actual (clase "activo" y aria-current para lectores de pantalla).
   function esActual(ruta) {
     return ruta === '/admin' ? ubicacion.pathname === '/admin' : ubicacion.pathname.startsWith(ruta)
   }
@@ -54,7 +51,6 @@ export default function PlantillaAdmin(props) {
               <Nav.Link {...propsEnlace('/admin')}>Citas</Nav.Link>
               <Nav.Link {...propsEnlace('/admin/servicios')}>Servicios</Nav.Link>
               <Nav.Link {...propsEnlace('/admin/resumen')}>Resumen</Nav.Link>
-              {/* Gestionar usuarios es solo del Administrador (documento del caso, sección 0.2). */}
               {sesion.rol === ROLES.ADMINISTRADOR && (
                 <Nav.Link {...propsEnlace('/admin/usuarios')}>Usuarios</Nav.Link>
               )}

@@ -4,7 +4,6 @@ import PlantillaPublica from '../components/templates/PlantillaPublica'
 import Boton from '../components/atoms/Boton'
 import { useTituloPagina } from '../hooks/useTituloPagina'
 
-// Se muestra cuando la persona inició sesión, pero su rol no permite ver la página.
 export default function SinPermiso() {
   const navigate = useNavigate()
   useTituloPagina('Sin permiso')

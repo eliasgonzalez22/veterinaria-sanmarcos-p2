@@ -24,11 +24,9 @@ import RutaProtegida from './routes/RutaProtegida'
 import { SesionProvider } from './context/SesionContext'
 import { ROLES, ROLES_PERSONAL } from './utils/roles'
 
-// Quién puede entrar a cada grupo de páginas (el backend vuelve a comprobarlo en cada solicitud).
 const SOLO_DUENO = [ROLES.DUENO]
 const SOLO_ADMIN = [ROLES.ADMINISTRADOR]
 
-// Atajo para no repetir <RutaProtegida> en cada ruta.
 function protegida(pagina, roles) {
   return <RutaProtegida roles={roles}>{pagina}</RutaProtegida>
 }

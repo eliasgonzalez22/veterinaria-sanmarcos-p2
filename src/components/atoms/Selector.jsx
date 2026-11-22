@@ -1,7 +1,5 @@
 import { Form } from 'react-bootstrap'
 
-// Átomo: lista desplegable. Las opciones pueden ser textos ('Consultas')
-// u objetos con valor y texto distintos ({ valor: 'DUENO', texto: 'Dueño de mascota' }).
 export default function Selector(props) {
   return (
     <Form.Select id={props.id} value={props.value} onChange={props.onChange} disabled={props.disabled}>

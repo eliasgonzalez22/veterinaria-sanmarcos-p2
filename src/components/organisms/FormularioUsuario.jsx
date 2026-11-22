@@ -8,11 +8,6 @@ import { ROLES, nombreRol } from '../../utils/roles'
 
 const OPCIONES_ROL = Object.values(ROLES).map((r) => ({ valor: r, texto: nombreRol(r) }))
 
-// Organismo: formulario para crear o editar un usuario desde el panel del Administrador.
-// - props.usuario: el usuario a editar, o null para crear uno nuevo.
-// - props.esPropio: true si es la cuenta de quien está conectado (no puede quitarse el rol ni desactivarse).
-// - props.onGuardar(datos): lo llama solo si la validación del navegador pasa.
-// El backend vuelve a validar todo (400) y revisa los permisos (403) y el correo repetido (409).
 export default function FormularioUsuario(props) {
   const editando = Boolean(props.usuario)
   const [nombre, setNombre] = useState(editando ? props.usuario.nombre : '')
@@ -27,7 +22,6 @@ export default function FormularioUsuario(props) {
     const nuevos = {
       nombre: validarNombre(nombre),
       email: validarEmail(email.trim()),
-      // Al editar, la contraseña es opcional: si queda vacía, no se cambia.
       clave: editando && clave === '' ? '' : validarClave(clave),
     }
     setErrores(nuevos)

@@ -12,11 +12,6 @@ import { crearUsuarioRequestDto, actualizarUsuarioRequestDto } from '../dto/usua
 import { obtenerMensajeError } from '../utils/mensajesError'
 import { nombreRol } from '../utils/roles'
 
-// Página del Administrador: CRUD de usuarios contra la API.
-//   Crear      -> POST   /usuarios        (elige el rol)
-//   Listar     -> GET    /usuarios
-//   Editar     -> PUT    /usuarios/{id}   (nombre, correo, clave, rol y estado)
-//   Desactivar -> DELETE /usuarios/{id}   (borrado lógico) · Reactivar -> PUT con activo: true
 export default function AdminUsuarios() {
   const { sesion } = useSesion()
   const [usuarios, setUsuarios] = useState([])
@@ -24,12 +19,10 @@ export default function AdminUsuarios() {
   const [error, setError] = useState('')
   const [exito, setExito] = useState('')
 
-  // Formulario en ventana modal: null = cerrado, { usuario: null } = nuevo, { usuario } = editar
   const [formulario, setFormulario] = useState(null)
   const [errorFormulario, setErrorFormulario] = useState('')
   const [guardando, setGuardando] = useState(false)
 
-  // Confirmación antes de desactivar (sin window.confirm)
   const [porDesactivar, setPorDesactivar] = useState(null)
   const [historialDe, setHistorialDe] = useState(null)
   useTituloPagina('Admin · Usuarios')
@@ -46,7 +39,6 @@ export default function AdminUsuarios() {
     }
   }
 
-  // Al montar la página: GET /usuarios.
   useEffect(() => {
     cargar()
   }, [])
@@ -73,7 +65,6 @@ export default function AdminUsuarios() {
           return
         }
         const actualizado = await actualizarUsuario(original.id, cambios)
-        // Solo se actualiza la lista después de una respuesta exitosa (guía 20).
         setUsuarios((lista) => lista.map((u) => (u.id === actualizado.id ? actualizado : u)))
         setExito(`Usuario ${actualizado.email} actualizado.`)
       } else {
@@ -117,7 +108,6 @@ export default function AdminUsuarios() {
     }
   }
 
-  // Las citas siguen en el navegador hasta que exista el microservicio de citas.
   const historial = historialDe ? listarCitasDeUsuario(historialDe.email) : []
 
   return (
@@ -205,7 +195,6 @@ export default function AdminUsuarios() {
         </section>
       )}
 
-      {/* Ventana para crear o editar */}
       <Modal show={formulario !== null} onHide={() => !guardando && setFormulario(null)} centered>
         <Modal.Header closeButton>
           <Modal.Title as="h2" className="h5">
@@ -227,7 +216,6 @@ export default function AdminUsuarios() {
         </Modal.Body>
       </Modal>
 
-      {/* Confirmación de desactivar (reemplaza a window.confirm) */}
       <Modal show={porDesactivar !== null} onHide={() => setPorDesactivar(null)} centered>
         <Modal.Header closeButton>
           <Modal.Title as="h2" className="h5">¿Desactivar usuario?</Modal.Title>

@@ -17,17 +17,14 @@ export default function Login() {
   const [cargando, setCargando] = useState(false)
   useTituloPagina('Ingresar')
 
-  // El formulario ya validó en el navegador; aquí se llama a la API (que valida de nuevo).
   async function enviar(datos) {
     setCargando(true)
     setMensaje('')
     try {
       const usuario = await ingresar(crearLoginRequestDto(datos))
-      // Si venía de una página protegida, vuelve a ella; si no, va al inicio de su rol.
       const desde = ubicacion.state && ubicacion.state.desde
       navigate(desde || rutaInicioSegunRol(usuario), { replace: true })
     } catch (error) {
-      // 401: mensaje genérico, sin revelar si el correo existe.
       if (error.response && error.response.status === 401) {
         setMensaje('Correo o contraseña incorrectos')
       } else {

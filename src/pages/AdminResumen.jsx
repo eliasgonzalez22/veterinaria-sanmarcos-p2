@@ -27,7 +27,6 @@ export default function AdminResumen() {
   const contexto = useServicios()
   const citas = listarCitas()
   const { sesion } = useSesion()
-  // Cantidad de usuarios desde la API. Solo el Administrador puede listarlos (si no, el backend da 403).
   const [totalUsuarios, setTotalUsuarios] = useState(null)
   const pendientes = citas.filter((c) => c.estado === 'pendiente')
   const confirmadas = citas.filter((c) => c.estado === 'confirmada')
@@ -39,7 +38,6 @@ export default function AdminResumen() {
     listarUsuarios()
       .then((lista) => { if (vigente) setTotalUsuarios(lista.length) })
       .catch(() => { if (vigente) setTotalUsuarios(null) })
-    // Si la página se desmonta antes de la respuesta, no se actualiza el estado.
     return () => { vigente = false }
   }, [sesion])
 

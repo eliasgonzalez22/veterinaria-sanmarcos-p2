@@ -40,7 +40,6 @@ export default function Perfil() {
 
     setCargando(true)
     try {
-      // PUT /usuarios/{id}: el backend comprueba que el id sea el del token (o que sea admin).
       const actualizado = await actualizarUsuario(sesion.id, { nombre: nombre.trim() })
       actualizarSesion(actualizado)
       setGuardado(true)

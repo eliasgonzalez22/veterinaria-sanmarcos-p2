@@ -19,9 +19,7 @@ export default function Registro() {
     setCargando(true)
     setMensaje('')
     try {
-      // 1) POST /auth/registro: el backend crea la cuenta con rol DUENO.
       await registrar(crearRegistroRequestDto(datos))
-      // 2) POST /auth/login con las mismas credenciales para entrar de inmediato.
       await ingresar(crearLoginRequestDto(datos))
       navigate('/mis-citas', { replace: true })
     } catch (error) {
