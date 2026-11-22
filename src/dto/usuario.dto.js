@@ -1,6 +1,4 @@
-// DTO de entrada para el CRUD de usuarios del Administrador.
 
-// POST /usuarios: el Administrador sí elige el rol (el registro público no).
 export function crearUsuarioRequestDto(formulario) {
   return {
     nombre: formulario.nombre.trim(),
@@ -10,8 +8,6 @@ export function crearUsuarioRequestDto(formulario) {
   }
 }
 
-// PUT /usuarios/{id}: solo viajan los campos que cambiaron respecto del usuario original.
-// La contraseña se envía únicamente si se escribió una nueva.
 export function actualizarUsuarioRequestDto(formulario, original) {
   const cambios = {}
   const nombre = formulario.nombre.trim()
