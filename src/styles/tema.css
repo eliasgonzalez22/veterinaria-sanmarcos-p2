@@ -156,10 +156,25 @@ body {
   border: none;
   border-radius: var(--vsm-radio);
   box-shadow: var(--vsm-sombra-hover);
+  padding: 0.4rem;
+  overflow: hidden;
+}
+
+/* Cada opción con sus propias esquinas redondeadas */
+.dropdown-item {
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--vsm-verde-claro);
+  color: var(--vsm-verde-oscuro);
 }
 
 .dropdown-item:active {
   background-color: var(--vsm-verde);
+  color: #ffffff;
 }
 
 /* === 5. Botones === */
