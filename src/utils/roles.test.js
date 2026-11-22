@@ -15,7 +15,7 @@ describe('roles', () => {
   it('tieneRol compara contra la lista de roles permitidos', () => {
     expect(tieneRol(admin, [ROLES.ADMINISTRADOR])).toBe(true)
     expect(tieneRol(recepcion, [ROLES.ADMINISTRADOR])).toBe(false)
-    expect(tieneRol(dueno)).toBe(true) // sin lista: basta con tener sesión
+    expect(tieneRol(dueno)).toBe(true)
     expect(tieneRol(null, [ROLES.DUENO])).toBe(false)
   })
 

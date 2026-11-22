@@ -1,5 +1,3 @@
-// Mock del service: se reemplaza la instancia de Axios por funciones falsas (vi.fn),
-// así la prueba no necesita el backend encendido y controla qué "responde" la API.
 vi.mock('./api', () => ({
   api: { get: vi.fn(), put: vi.fn(), post: vi.fn(), delete: vi.fn() },
 }))
