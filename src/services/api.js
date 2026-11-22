@@ -7,8 +7,9 @@ import { obtenerToken, limpiarSesion } from './sesionService'
 export const EVENTO_SESION_VENCIDA = 'sesion-vencida'
 
 export const api = axios.create({
-  // Vite lee VITE_API_URL del archivo .env al iniciar (ver .env.example).
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8081/api/v1',
+  // Vite lee VITE_API_URL del archivo .env al compilar (ver .env.example).
+  // Por defecto es una ruta relativa: el proxy de Vite la reenvía al backend (vite.config.js).
+  baseURL: import.meta.env.VITE_API_URL || '/api/v1',
   // Si el backend no responde en 10 segundos, Axios rechaza con error.code = 'ECONNABORTED'.
   timeout: 10000,
 })
