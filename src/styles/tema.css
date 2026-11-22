@@ -106,7 +106,7 @@ header.bg-dark .nav-link.activo {
 
 /* Línea suave bajo el enlace al pasar el mouse (solo cuando el menú está desplegado en fila, desde 1200 px) */
 @media (min-width: 1200px) {
-  .navbar-dark .nav-link::after {
+  .navbar-dark .nav-link:not(.dropdown-toggle)::after {
     content: '';
     position: absolute;
     left: 0.5rem;
@@ -118,9 +118,17 @@ header.bg-dark .nav-link.activo {
     transition: transform 0.2s;
   }
 
-  .navbar-dark .nav-link:hover::after {
+  .navbar-dark .nav-link:not(.dropdown-toggle):hover::after,
+  .navbar-dark .nav-link.activo::after {
     transform: scaleX(1);
   }
+}
+
+/* Página actual: texto blanco y en negrita (también en el menú de celular) */
+.navbar-dark .nav-link.activo,
+.navbar-dark .dropdown-toggle.active {
+  color: #ffffff;
+  font-weight: 700;
 }
 
 /* Menú tipo hamburguesa (bajo 1200 px): separado y legible */
